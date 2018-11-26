@@ -45,9 +45,8 @@ Please read [CONTRIBUTING.md](https://github.com/davidparry/JRediSearchWorkshop/
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Apache 2 License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
 * [Scott Cote](http://www.linkedin.com/in/scottccote) -- for proof reading and working out the examples.
-

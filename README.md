@@ -10,8 +10,18 @@ These instructions will get you a copy of the project up and running on your loc
 
 - [Docker for Operating System Installed](https://docs.docker.com/ee/end-to-end-install "Link to Docker EE page")
 ```
-docker -v
+$ docker -v
 Docker version 18.06.1-ce, build e68fc7a
+```
+- Pull and start Docker Redisearch Container
+```
+$ docker run -d  -p 6379:6379 --name redisearch redislabs/redisearch:1.4.0 
+{hashid}
+$ docker logs redisearch
+# oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+# .... (removed for brevity)
+* Ready to accept connections
+
 ```
 - [Gradle Build for Operating System Installed](https://services.gradle.org/distributions/gradle-4.8-all.zip "Gradle Distributions")
 ```

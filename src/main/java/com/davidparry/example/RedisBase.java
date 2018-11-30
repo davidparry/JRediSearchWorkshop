@@ -2,7 +2,7 @@ package com.davidparry.example;
 
 import io.redisearch.client.Client;
 
-public class RedisBase {
+public abstract class RedisBase {
 
     private String host = "localhost";
     private int port = 6379;

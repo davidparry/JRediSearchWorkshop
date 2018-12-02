@@ -16,10 +16,10 @@ Docker version 18.06.1-ce, build e68fc7a
 - Pull and start Docker Redisearch Container
 ```
 $ docker run -d  -p 6379:6379 --name redisearch redislabs/redisearch:1.4.0 
-{hashid}
+{hash} <-- not used indicates success
 $ docker logs redisearch
-# oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-# .... (removed for brevity)
+# oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo 
+# .... (removed for brevity) 
 * Ready to accept connections
 
 ```

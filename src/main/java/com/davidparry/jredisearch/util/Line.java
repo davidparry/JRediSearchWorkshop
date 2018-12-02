@@ -8,12 +8,10 @@ public class Line {
 
     private String id;
     private BookParser.State state;
-    private String description;
-    private String verse;
+    private int line;
     private String text;
-    private String book;
-    private String chapter;
-    private int chapterIndex;
+    private String title;
+    private int chapter;
 
     public static Builder builder() {
         return new Builder();
@@ -25,13 +23,11 @@ public class Line {
 
     public Line(Builder builder) {
         this.state = builder.state;
-        this.description = builder.description;
-        this.verse = builder.verse;
+        this.line = builder.line;
         this.text = builder.text;
-        this.book = builder.book;
+        this.title = builder.title;
         this.chapter = builder.chapter;
         this.id = builder.id;
-        this.chapterIndex = builder.chapterIndex;
     }
 
     public String getId() {
@@ -42,28 +38,16 @@ public class Line {
         return state;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getVerse() {
-        return verse;
-    }
-
     public String getText() {
         return text;
     }
 
-    public String getBook() {
-        return book;
+    public String getTitle() {
+        return title;
     }
 
-    public String getChapter() {
+    public int getChapter() {
         return chapter;
-    }
-
-    public int getChapterIndex() {
-        return chapterIndex;
     }
 
     @Override
@@ -79,43 +63,26 @@ public class Line {
         return Objects.hash(getId());
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Line{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", state=").append(state);
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", verse='").append(verse).append('\'');
-        sb.append(", text='").append(text).append('\'');
-        sb.append(", book='").append(book).append('\'');
-        sb.append(", chapter='").append(chapter).append('\'');
-        sb.append(", chapterIndex=").append(chapterIndex);
-        sb.append('}');
-        return sb.toString();
-    }
 
     public static final class Builder {
         private BookParser.State state;
         private String description;
-        private String verse;
+        private int line;
         private String text;
-        private String book;
-        private String chapter;
+        private String title;
+        private int chapter;
         private String id;
-        private int chapterIndex;
 
         public Builder() {
         }
 
         private Builder(Line line) {
             this.state = line.state;
-            this.description = line.description;
-            this.verse = line.verse;
+            this.line = line.line;
             this.text = line.text;
-            this.book = line.book;
+            this.title = line.title;
             this.chapter = line.chapter;
             this.id = line.id;
-            this.chapterIndex = line.chapterIndex;
         }
 
         public Builder append(String line) {
@@ -127,18 +94,13 @@ public class Line {
             return this;
         }
 
-        public Builder description(String description) {
-            this.description = description;
-            return this;
-        }
-
         public Builder state(BookParser.State state) {
             this.state = state;
             return this;
         }
 
-        public Builder verse(String verse) {
-            this.verse = verse;
+        public Builder line(int line) {
+            this.line = line;
             return this;
         }
 
@@ -147,12 +109,12 @@ public class Line {
             return this;
         }
 
-        public Builder book(String book) {
-            this.book = book;
+        public Builder title(String title) {
+            this.title = title;
             return this;
         }
 
-        public Builder chapter(String chapter) {
+        public Builder chapter(int chapter) {
             this.chapter = chapter;
             return this;
         }
@@ -162,31 +124,11 @@ public class Line {
             return this;
         }
 
-        public Builder chapterIndex(int chapterIndex) {
-            this.chapterIndex = chapterIndex;
-            return this;
-        }
-
         public Line build() {
             if (this.state == null) {
                 this.state = BookParser.State.BLANK;
             }
-            this.id = StringUtils.replaceAll(book, " ", "-")
-                    + ":" + StringUtils.replaceAll(chapter, " ", "-") + ":" + verse;
-
-            if(this.verse != null) {
-                String[] chapter = this.verse.split(":");
-                if (chapter != null && chapter.length > 0 && chapter[0] != null) {
-                    if (StringUtils.isNumeric(chapter[0])) {
-                        try {
-                            this.chapterIndex = Integer.valueOf(chapter[0]).intValue();
-                        } catch (Exception er) {
-                            er.printStackTrace();
-                        }
-                    }
-                }
-            }
-
+            this.id = chapter + ":" + line;
             return new Line(this);
         }
     }

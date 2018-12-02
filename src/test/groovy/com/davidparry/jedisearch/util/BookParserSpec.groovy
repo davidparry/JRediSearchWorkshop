@@ -7,7 +7,7 @@ class BookParserSpec extends Specification {
 
     def "initial book is valid and has all lines to use in the examples"() {
         expect:
-        new BookParser().parse("book").size() == 18552
+        new BookParser().parse("book").size() == 1479
 
     }
 

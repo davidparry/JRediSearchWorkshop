@@ -9,7 +9,7 @@ class RedisDemoSpec extends Specification {
     RedisDemo demo = new RedisDemo()
 
     def setup() {
-        demo.checkConnection()
+        demo.getClient().dropIndex(true)
     }
 
 
@@ -17,6 +17,7 @@ class RedisDemoSpec extends Specification {
 
         expect:
         demo.getClient() != null
+
     }
 
     def "well what about a valid connection"() {

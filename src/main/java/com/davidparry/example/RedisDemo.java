@@ -3,6 +3,8 @@ package com.davidparry.example;
 import io.redisearch.Client;
 import io.redisearch.Schema;
 import org.apache.commons.lang3.StringUtils;
+import redis.clients.jedis.exceptions.JedisConnectionException;
+import redis.clients.jedis.exceptions.JedisDataException;
 
 import java.util.List;
 
@@ -30,20 +32,29 @@ public class RedisDemo {
 
 
     /**
-     * If you do not already have an Index then the only way to tell if your connection is valid is to send the
-     * dropindex call to redis with flag true. This actually will throw an exception but the api catches it if you
-     * send in a true flag. If connection is not able to establish still get an exception.
+     * No ideal way to check for a connection when index does not exist
+     * But this is another way which does the least amount of harm but still has problems.
+     * See post http://davidparry.com/blog/2018/12/2/testing-conductivity-in-jredissearch-to-redis-without-a-prev.html
+     *
      * <p>
-     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/client/Client.html#dropIndex-boolean-
+     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/client/Client.html#getInfo--
      * <p>
-     * https://oss.redislabs.com/redisearch/Commands/#ftdrop
+     * https://oss.redislabs.com/redisearch/Commands/#ftinfo
      * <p>
-     * Command: FT.DROP
+     * Command FT.INFO
      *
      * @return true if connection was successful
      */
     public boolean checkConnection() {
-        return !getClient().dropIndex(true);
+        boolean flag = true;
+        try {
+            getClient().getInfo();
+        } catch (JedisConnectionException je) {
+            flag = false;
+        } catch (JedisDataException jex) {
+            // index not present or some other data exception :-(
+        }
+        return flag;
     }
 
     /**

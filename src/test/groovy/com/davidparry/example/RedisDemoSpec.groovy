@@ -55,6 +55,11 @@ class RedisDemoSpec extends Specification {
 
     }
 
+    def "Count how many documents have term book"() {
 
+        expect:
+        demo.countNumberOfDocumentsHaveBookTerm() == 1
+
+    }
 
 }

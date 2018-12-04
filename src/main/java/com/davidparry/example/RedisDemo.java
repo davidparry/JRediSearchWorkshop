@@ -3,7 +3,9 @@ package com.davidparry.example;
 import com.google.gson.Gson;
 import io.redisearch.Client;
 import io.redisearch.Document;
+import io.redisearch.Query;
 import io.redisearch.Schema;
+import io.redisearch.SearchResult;
 import io.redisearch.client.AddOptions;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.exceptions.JedisConnectionException;
@@ -157,5 +159,39 @@ public class RedisDemo {
         Map<String, Object> info = getClient().getInfo();
         return Integer.parseInt((String) info.get("num_docs"));
     }
+
+    /**
+     * A simple example of adding 2 Documents have them indexed and then do a simple search for term book
+     * <p>
+     * https://oss.redislabs.com/redisearch/Commands/#ftsearch
+     * <p>
+     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/Client.html#search-io.redisearch.Query-
+     * <p>
+     * <p>
+     * Command FT.SEARCH
+     *
+     * @return number of documents that have book should be 1
+     */
+    public long countNumberOfDocumentsHaveBookTerm() {
+        createSchema();
+        Map<String, Object> fields = new HashMap<>();
+        fields.put("text", "I am some text that is on one line of the book.");
+        fields.put("chapter", 23);
+        fields.put("line", 300);
+        fields.put("title", "I am a title of the book");
+        getClient().addDocument(new Document("123", fields), new AddOptions());
+        fields.put("title", "I am a title but something missing");
+        fields.put("line", 301);
+        fields.put("text", "another line of text that will not have the same term we will be searching on.");
+        getClient().addDocument(new Document("124", fields), new AddOptions());
+
+        SearchResult searchResult = getClient().search(new Query("book"));
+        Map<String, Object> info = getClient().getInfo();
+        // see 2 documents arr in the index
+        assert 2 == Integer.parseInt((String) info.get("num_docs"));
+
+        return searchResult.totalResults;
+    }
+
 
 }

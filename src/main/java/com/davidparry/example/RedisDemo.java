@@ -1,12 +1,17 @@
 package com.davidparry.example;
 
+import com.google.gson.Gson;
 import io.redisearch.Client;
+import io.redisearch.Document;
 import io.redisearch.Schema;
+import io.redisearch.client.AddOptions;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Link to the JRedis client and the javadoc to reference
@@ -93,6 +98,64 @@ public class RedisDemo {
         List b = (List) getClient().getInfo().get("fields");
         assert StringUtils.equals(new String((byte[]) ((List) b.get(0)).get(0)), "id");
         return StringUtils.equals((CharSequence) getClient().getInfo().get("index_name"), "book");
+    }
+
+    /**
+     * A simple document being added to the index through the Client Interface
+     * <p>
+     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/Client.html#addDocument-io.redisearch.Document-io.redisearch.client.AddOptions-
+     * <p>
+     * https://oss.redislabs.com/redisearch/Commands/#ftadd
+     * <p>
+     * https://oss.redislabs.com/redisearch/Commands/#ftinfo field "num_docs" the amount of docs in the index
+     * <p>
+     * Command FT.ADD
+     *
+     * @return the number of documents should only be 1 for this example
+     */
+    public int addSimpleBookDocument() {
+        createSchema();
+        Map<String, Object> fields = new HashMap<>();
+        fields.put("text", "I am an example sentence.");
+        fields.put("chapter", 1);
+        fields.put("line", 1);
+        fields.put("title", "title of tbe book");
+        getClient().addDocument(new Document("123-abc", fields), new AddOptions());
+        Map<String, Object> info = getClient().getInfo();
+        return Integer.parseInt((String) info.get("num_docs"));
+    }
+
+
+    /**
+     * Show how to add a payload to the document. Currently the module will not retrieve do to the bug in JRedisearch.
+     * Though you can add the payload you can not the Query object not using the correct argument WITHPAYLOADS
+     *
+     * <p>
+     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/Client.html#addDocument-io.redisearch.Document-io.redisearch.client.AddOptions-
+     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/Document.html#Document-java.lang.String-java.util.Map-double-byte:A-
+     * <p>
+     * https://oss.redislabs.com/redisearch/Commands/#ftadd
+     * <p>
+     * https://oss.redislabs.com/redisearch/Commands/#ftinfo field "num_docs" the amount of docs in the index
+     * <p>
+     * <p>
+     * Command FT.ADD
+     *
+     * @return number of records should be 1 for this example
+     */
+    public int addDocumentwithPayload() {
+        createSchema();
+        Map<String, Object> fields = new HashMap<>();
+        fields.put("text", "A sentence in the book.");
+        fields.put("chapter", 3);
+        fields.put("line", 56);
+        fields.put("title", "title of tbe book is");
+        fields.put("large", "i am more data that really do not want to be indexed but stored in redis as a payload");
+        Gson gson = new Gson();
+
+        getClient().addDocument(new Document("123-abc", fields, 1.0, gson.toJson(fields).getBytes()), new AddOptions());
+        Map<String, Object> info = getClient().getInfo();
+        return Integer.parseInt((String) info.get("num_docs"));
     }
 
 }

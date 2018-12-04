@@ -41,6 +41,20 @@ class RedisDemoSpec extends Specification {
         demo.validateIndexSchema()
     }
 
+    def "Add a simple document to the index"() {
+
+        expect:
+        demo.addSimpleBookDocument() == 1
+
+    }
+
+    def "Add a document with a payload to the index"() {
+
+        expect:
+        demo.addDocumentwithPayload() == 1
+
+    }
+
 
 
 }

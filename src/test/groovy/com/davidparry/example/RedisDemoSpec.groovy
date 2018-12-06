@@ -62,4 +62,11 @@ class RedisDemoSpec extends Specification {
 
     }
 
+    def "Suggestion adding and getting matching suggestions fuzzy" () {
+
+        expect:
+        demo.suggestionLoadandRetrieve().get(0).getString() == "hello"
+
+    }
+
 }

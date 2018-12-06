@@ -6,7 +6,9 @@ import io.redisearch.Document;
 import io.redisearch.Query;
 import io.redisearch.Schema;
 import io.redisearch.SearchResult;
+import io.redisearch.Suggestion;
 import io.redisearch.client.AddOptions;
+import io.redisearch.client.SuggestionOptions;
 import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
@@ -193,5 +195,41 @@ public class RedisDemo {
         return searchResult.totalResults;
     }
 
+
+    /**
+     * Add word to the auto-complete suggestion dictionary not connected to the index then see it in action
+     * retrieving using fuzzy retrieval
+     * We will act like we got a list of suggestions used picked hello to search so increasing its weight for new
+     * searches in the future
+     * <p>
+     * Parameter FUZZY in the retrieval to allow Fuzzy matching see
+     * uses the Levenshtein distance of 1 from the prefix sent (https://en.wikipedia.org/wiki/Levenshtein_distance)
+     * <p>
+     * Command FT.SUGADD
+     */
+    public List<Suggestion> suggestionLoadandRetrieve() {
+        createSchema();
+        getClient().addSuggestion(Suggestion.builder().score(0.5).str("hello").build(), false);
+        getClient().addSuggestion(Suggestion.builder().score(0.5).str("happy").build(), false);
+        getClient().addSuggestion(Suggestion.builder().score(0.5).str("henry").build(), false);
+        getClient().addSuggestion(Suggestion.builder().score(0.5).str("hair").build(), false);
+        getClient().addSuggestion(Suggestion.builder().score(0.5).str("howdy").build(), false);
+
+        // default return is max of 5 results
+        List<Suggestion> list = getClient().getSuggestion("he", SuggestionOptions.builder().fuzzy()
+                .with(SuggestionOptions.With.SCORES).build());
+
+        // show we get five suggestions
+        assert list.size() == 5;
+
+        // adding hello since we used hello as the term to search with incrementing its weight
+        getClient().addSuggestion(Suggestion.builder().score(0.5).str("hello").build(), true);
+
+        list = getClient().getSuggestion("he", SuggestionOptions.builder()
+                .fuzzy().with(SuggestionOptions.With.SCORES).build());
+
+        return list;
+
+    }
 
 }

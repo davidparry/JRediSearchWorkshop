@@ -45,6 +45,10 @@ git clone git@github.com:davidparry/JRediSearchWorkshop.git
 ./gradlew check
 ```
 
+## Presentation Slides in pdf format
+Download [JRedisearchWorkshop.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRedisearchWorkshop.pdf) the slides stored in this repo.
+ 
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/davidparry/JRediSearchWorkshop/blob/master/CONTRIBUTING.md)  the process for submitting pull requests to me.

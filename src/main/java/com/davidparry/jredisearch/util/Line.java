@@ -50,6 +50,10 @@ public class Line {
         return chapter;
     }
 
+    public int getLine() {
+        return line;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,7 +70,6 @@ public class Line {
 
     public static final class Builder {
         private BookParser.State state;
-        private String description;
         private int line;
         private String text;
         private String title;

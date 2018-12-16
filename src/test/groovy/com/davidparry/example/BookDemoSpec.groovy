@@ -1,6 +1,7 @@
 package com.davidparry.example
 
 import io.redisearch.SearchResult
+import io.redisearch.Suggestion
 import org.apache.commons.lang3.StringUtils
 import spock.lang.Shared
 import spock.lang.Specification
@@ -42,11 +43,11 @@ class BookDemoSpec extends Specification {
         List<String> suggestion = demo.getSuggestions(partial)
 
         then:
-        String term = suggestion.get(index)
-        SearchResult result = demo.search(term)
+        Suggestion term = suggestion.get(index)
+        SearchResult result = demo.search(term.getString())
         result.totalResults == total
         // our search is not case sensitive here is the proof
-        StringUtils.containsIgnoreCase(result.docs.get(0).get("text"), term)
+        StringUtils.containsIgnoreCase(result.docs.get(0).get("text"), term.getString())
 
         where:
         partial | total | index

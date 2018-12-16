@@ -1,6 +1,6 @@
 package com.davidparry.example;
 
-import com.davidparry.jredisearch.util.Book;
+import com.davidparry.example.util.Book;
 import io.redisearch.Client;
 import io.redisearch.Document;
 import io.redisearch.Query;
@@ -10,6 +10,7 @@ import io.redisearch.Suggestion;
 import io.redisearch.client.AddOptions;
 import io.redisearch.client.SuggestionOptions;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class BookDemo {
     private Client client = new io.redisearch.client.Client("art_book", "localhost", 6379);
     private Schema schema = new Schema().addTextField("id", 0.05)
@@ -72,11 +74,13 @@ public class BookDemo {
         });
     }
 
-    public List<String> getSuggestions(String partial) {
+    public List<Suggestion> getSuggestions(String partial) {
         List<Suggestion> suggestions = client.getSuggestion(partial, SuggestionOptions.builder().fuzzy().build());
-        return suggestions.stream().map(suggestion ->
+        suggestions.stream().map(suggestion ->
                 suggestion.getString()
         ).collect(Collectors.toList());
+
+        return suggestions;
     }
 
 

@@ -1,4 +1,4 @@
-package com.davidparry.jredisearch.util;
+package com.davidparry.example.util;
 
 import java.util.Set;
 

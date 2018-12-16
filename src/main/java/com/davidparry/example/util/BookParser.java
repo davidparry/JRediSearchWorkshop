@@ -1,4 +1,4 @@
-package com.davidparry.jredisearch.util;
+package com.davidparry.example.util;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;

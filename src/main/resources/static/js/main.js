@@ -40,7 +40,8 @@ function search_submit() {
         timeout: 600000,
         success: function (data) {
             $('#feedback').empty();
-            var table = [["Score", "Chapter", "Line", "ID", "Text"]];
+            //var table = [["Score", "Chapter", "Line", "ID", "Text"]];
+            var table = [];
             if (data.msg === 'found') {
                 var items = data.results.list;
                 for (var i = 0; items.length > i; i++) {
@@ -68,11 +69,25 @@ function search_submit() {
     });
 
     function makeTable(container, data) {
-        var table = $("<table/>").addClass(['table']);
+        var table = $("<table/>").addClass('table table-bordered');
+        var headers = ["Score", "Chapter", "Line", "ID", "Text"]
+        var heads = $("<tr/>");
+        $.each(headers, function (colIndex, c) {
+            heads.append($("<th/>").text(c).addClass('table-bordered thead td bg-primary'));
+        });
+        table.append(heads);
+
+
         $.each(data, function (rowIndex, r) {
             var row = $("<tr/>");
+            var colorCode = "bg-success";
+            if(rowIndex % 2 == 0) {
+                colorCode = 'bg-success';
+            } else {
+                colorCode = 'table-two-color';
+            }
             $.each(r, function (colIndex, c) {
-                row.append($("<t" + (rowIndex == 0 ? "h" : "d") + "/>").text(c));
+                    row.append($("<td/>").text(c)).addClass('table-bordered td '+ colorCode);
             });
             table.append(row);
         });

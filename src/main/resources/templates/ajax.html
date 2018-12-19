@@ -1,22 +1,61 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <title>JRediSearch Book Search Example</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.css"/>
 
+    <link rel="stylesheet" href="webjars/bootstrap-table/1.9.1-1/bootstrap-table.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <style>
+        .autocomplete-suggestions {
+            border: 1px solid #999;
+            background: #FFF;
+            overflow: auto;
+        }
+
+        .autocomplete-suggestion {
+            padding: 2px 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .autocomplete-selected {
+            background: #F0F0F0;
+        }
+
+        .autocomplete-suggestions strong {
+            font-weight: normal;
+            color: #3399FF;
+        }
+
+        .autocomplete-group {
+            padding: 2px 5px;
+        }
+
+        .autocomplete-group strong {
+            display: block;
+            border-bottom: 1px solid #000;
+        }
+
+        .table-two-color {
+            color: #e2e2e2;
+            background-color: #2b4a47;
+        }
+
+
+    </style>
 </head>
 <body>
 
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a  href="http://davidparry.com"> <img src="http://davidparry.com/storage/icon_color_100.png" height="70px"></a>
+            <a href="http://davidparry.com"> <img src="http://davidparry.com/storage/icon_color_100.png" height="70px"></a>
         </div>
     </div>
 </nav>
@@ -30,13 +69,13 @@
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="term"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="text-right col-sm-10">
+                <div class="form-group-btn">
                     <button type="submit" id="bth-search"
-                            class="btn btn-primary btn-lg">Search</button>
+                            class="btn btn-primary btn-lg">Search
+                    </button>
                 </div>
             </div>
+
         </form>
         <div id="feedback" class="bg-info"></div>
     </div>
@@ -46,7 +85,7 @@
 <div class="container">
     <footer>
         <p>
-        @Copyright David Parry 2018
+            @Copyright David Parry 2018
         </p>
     </footer>
 </div>

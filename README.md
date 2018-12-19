@@ -36,18 +36,37 @@ Welcome to Gradle 4.8!
 git clone git@github.com:davidparry/JRediSearchWorkshop.git
 ```
 
-## Running the Examples
+## Running the Spock Test Examples
 
-* If you do not want to follow along you can checkout different tags.
-* Each tag will have Spock Unit Tests that are the end results of the exercises.
-* Simple run the check command and you will see the example in action.
+* If you do not want to follow along with the [JRedisearchWorkshop.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRedisearchWorkshop.pdf) 
+you can checkout different tags referenced in this pdf.
+* Each tag up from v0.0 to v6.0 is for presentation [JRedisearchWorkshop.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRedisearchWorkshop.pdf) 
+you can run the Spock Unit Tests that are the end results for each exercises based on the tag.
+* Simple checkout and then run the check command and you will see the example in action.
 ```
+git checkout v1.1
 ./gradlew check
 ```
 
-## Presentation Slides in pdf format
+## JRedisearchWorkshop Presentation Slides in pdf format
 Download [JRedisearchWorkshop.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRedisearchWorkshop.pdf) the slides stored in this repo.
  
+## Running the BookDemo Springboot Search Example
+* If you want to follow along can check out different tags that are referenced in the presentation [JRediSpringboot.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRediSpringboot.pdf)
+* Each tag from 7.0 and higher is for the BookDemo Springboot Search Example 
+* Feel free to checkout out a tag, gradle check and bootRun
+
+```
+git checkout v7.0
+./gradlew check bootRun
+```
+
+## BookDemo Springboot Search Example
+![screenshot_result.png](screenshot_result.png)
+
+
+## BookDemo JRediSpringboot Presentation Slides in pdf format
+Download [JRediSpringboot.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRediSpringboot.pdf) the slides stored in this repo.
 
 ## Contributing
 

@@ -14,9 +14,8 @@ $(document).ready(function () {
         dataType: 'json',
         onSelect: suggest
     });
-
-
 });
+
 
 function suggest(suggestion) {
     search_submit()
@@ -46,7 +45,7 @@ function search_submit() {
                 var items = data.results.list;
                 for (var i = 0; items.length > i; i++) {
                     var item = items[i];
-                    table.push([item.score, item.chapter, item.line, item.id, item.text])
+                    table.push([item.score, item.chapter, item.line, item.id, item.text, item.title])
                 }
             } else {
                 table.push(['Nothing found', '', '', '', '', ''])
@@ -70,7 +69,7 @@ function search_submit() {
 
     function makeTable(container, data) {
         var table = $("<table/>").addClass('table table-bordered');
-        var headers = ["Score", "Chapter", "Line", "ID", "Text"]
+        var headers = ["Score", "Chapter", "Line", "ID", "Text"];
         var heads = $("<tr/>");
         $.each(headers, function (colIndex, c) {
             heads.append($("<th/>").text(c).addClass('table-bordered thead td bg-primary'));
@@ -81,14 +80,28 @@ function search_submit() {
         $.each(data, function (rowIndex, r) {
             var row = $("<tr/>");
             var colorCode = "bg-success";
-            if(rowIndex % 2 == 0) {
+            if (rowIndex % 2 == 0) {
                 colorCode = 'bg-success';
             } else {
                 colorCode = 'table-two-color';
             }
+            var tooltip = '';
             $.each(r, function (colIndex, c) {
-                    row.append($("<td/>").text(c)).addClass('table-bordered td '+ colorCode);
+                if (colIndex == 5) {
+                    tooltip = c;
+                } else {
+                    row.append($("<td/>").text(c)).addClass('table-bordered td ' + colorCode);
+                }
             });
+
+            row.mouseover(function () {
+                $('#popup').html('<b>&nbsp;TITLE:&nbsp;</b>&nbsp;<i>'+ tooltip+ '</i>').show();
+            });
+            row.mouseout(function () {
+                $('#popup').html('').hide();
+            });
+
+
             table.append(row);
         });
         return container.append(table);

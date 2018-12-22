@@ -91,7 +91,7 @@ public class BookDemo {
             fields.put("text", line.getText());
             fields.put("chapter", line.getChapter());
             fields.put("line", line.getLine());
-            fields.put("title", "title of tbe book");
+            fields.put("title", line.getTitle());
             documents.add(new Document(line.getId(), fields));
         });
         return documents;

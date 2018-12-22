@@ -57,11 +57,11 @@ git checkout v7.0
 
 
 ## BookDemo JRediSpringboot Presentation Slides in pdf format
-Download [JRediSpringboot.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRediSpringboot.pdf) the slides stored in this repo.
+Download [JRediSpringboot.pdf](JRediSpringboot.pdf) the slides stored in this repo.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/davidparry/JRediSearchWorkshop/blob/master/CONTRIBUTING.md)  the process for submitting pull requests to me.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md)  the process for submitting pull requests to me.
 
 ## Authors
 
@@ -69,7 +69,7 @@ Please read [CONTRIBUTING.md](https://github.com/davidparry/JRediSearchWorkshop/
 
 ## License
 
-This project is licensed under the Apache 2 License - see the [LICENSE](https://github.com/davidparry/JRediSearchWorkshop/blob/master/LICENSE) file for details
+This project is licensed under the Apache 2 License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 

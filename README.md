@@ -36,22 +36,32 @@ Welcome to Gradle 4.8!
 git clone git@github.com:davidparry/JRediSearchWorkshop.git
 ```
 
-## Running the Examples
+## Running the Spock Test Examples
 
-* If you do not want to follow along you can checkout different tags.
-* Each tag will have Spock Unit Tests that are the end results of the exercises.
-* Simple run the check command and you will see the example in action.
 ```
 ./gradlew check
 ```
 
-## Presentation Slides in pdf format
-Download [JRedisearchWorkshop.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRedisearchWorkshop.pdf) the slides stored in this repo.
- 
+## Running the BookDemo Springboot Search Example
+* If you want to follow along can check out different tags that are referenced in the presentation [JRediSpringboot.pdf](https://github.com/davidparry/JRediSearchWorkshop/blob/master/JRediSpringboot.pdf)
+* Each tag from 7.0 and higher is for the BookDemo Springboot Search Example 
+* Feel free to checkout out a tag, gradle check and bootRun
+
+```
+git checkout v7.0
+./gradlew check bootRun
+```
+
+## BookDemo Springboot Search Example
+![screenshot_result.png](screenshot_result.png)
+
+
+## BookDemo JRediSpringboot Presentation Slides in pdf format
+Download [JRediSpringboot.pdf](JRediSpringboot.pdf) the slides stored in this repo.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/davidparry/JRediSearchWorkshop/blob/master/CONTRIBUTING.md)  the process for submitting pull requests to me.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md)  the process for submitting pull requests to me.
 
 ## Authors
 
@@ -59,7 +69,7 @@ Please read [CONTRIBUTING.md](https://github.com/davidparry/JRediSearchWorkshop/
 
 ## License
 
-This project is licensed under the Apache 2 License - see the [LICENSE](https://github.com/davidparry/JRediSearchWorkshop/blob/master/LICENSE) file for details
+This project is licensed under the Apache 2 License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 

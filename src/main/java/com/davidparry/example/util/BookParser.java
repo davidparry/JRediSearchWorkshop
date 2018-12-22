@@ -1,4 +1,4 @@
-package com.davidparry.jredisearch.util;
+package com.davidparry.example.util;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
@@ -22,7 +22,7 @@ public class BookParser {
         try {
             li = IOUtils.lineIterator(is, "utf-8");
             String title = "";
-            int lineNumber = 0;
+            int lineNumber = 1;
             int chapter =0;
             while (li.hasNext()) {
                 String line = li.nextLine();
@@ -32,10 +32,9 @@ public class BookParser {
                 } else if (State.TITLE.equals(l.getState())) {
                     title = l.getTitle();
                 } else if (State.LINE.equals(l.getState())) {
-                    lineNumber++;
                     items.add(l.toBuilder().title(title).chapter(chapter).line(lineNumber).build());
                 }
-
+                lineNumber++;
             }
             li.close();
         } catch (Exception er) {

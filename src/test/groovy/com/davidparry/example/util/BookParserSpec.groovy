@@ -1,6 +1,6 @@
-package com.davidparry.jedisearch.util
+package com.davidparry.example.util
 
-import com.davidparry.jredisearch.util.BookParser
+
 import spock.lang.Specification
 
 class BookParserSpec extends Specification {

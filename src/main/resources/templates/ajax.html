@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JRediSearch Book Search Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.css"/>
+
+    <link rel="stylesheet" href="webjars/bootstrap-table/1.9.1-1/bootstrap-table.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link rel="stylesheet" href="webjars/jquery-ui/1.12.1/jquery-ui.css">
+    <style>
+        .autocomplete-suggestions {
+            border: 1px solid #999;
+            background: #FFF;
+            overflow: auto;
+        }
+
+        .autocomplete-suggestion {
+            padding: 2px 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .autocomplete-selected {
+            background: #F0F0F0;
+        }
+
+        .autocomplete-suggestions strong {
+            font-weight: normal;
+            color: #3399FF;
+        }
+
+        .autocomplete-group {
+            padding: 2px 5px;
+        }
+
+        .autocomplete-group strong {
+            display: block;
+            border-bottom: 1px solid #000;
+        }
+
+        .table-two-color {
+            color: #e2e2e2;
+            background-color: #2b4a47;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="http://davidparry.com"> <img src="http://daviddryparry.squarespace.com/storage/web-title-bar-white-trans-960x94.png" height="70px"></a>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="min-height: 500px">
+
+    <div class="starter-template">
+        <h1>Search 'The Art of Alchimy Book'</h1>
+        <form class="form-horizontal" id="search-form">
+            <div class="form-group form-group-lg">
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="term"/>
+                </div>
+                <div class="form-group-btn">
+                    <button type="submit" id="bth-search"
+                            class="btn btn-primary btn-lg">Search
+                    </button>
+                </div>
+            </div>
+
+        </form>
+        <div id="feedback" class="bg-info"></div>
+
+        <div class="bg-warning" id="popup">
+        </div>
+
+
+    </div>
+
+</div>
+<div class="container">
+    <footer>
+        <p>
+            @Copyright David Parry 2018
+        </p>
+    </footer>
+</div>
+
+<script type="text/javascript" src="webjars/jquery/3.3.1-1/jquery.js"></script>
+<script type="text/javascript" src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+
+
+<script type="text/javascript" src="webjars/jQuery-Autocomplete/1.4.9/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="webjars/jQuery-Autocomplete/1.4.9/jquery.autocomplete.min.js"></script>
+<!-- script type="text/javascript" src="webjars/jquery-ui/1.12.1/jquery-ui.js"></script -->
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>

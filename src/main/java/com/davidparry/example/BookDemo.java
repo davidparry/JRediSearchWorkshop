@@ -11,6 +11,8 @@ import io.redisearch.client.AddOptions;
 import io.redisearch.client.SuggestionOptions;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.exceptions.JedisConnectionException;
+import redis.clients.jedis.exceptions.JedisDataException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookDemo {
-    private Client client = new io.redisearch.client.Client("art_book", "localhost", 6379);
+    private Client client;
     private Schema schema = new Schema().addTextField("id", 0.05)
             .addTextField("text", 0.5)
             .addNumericField("chapter")
@@ -31,15 +33,65 @@ public class BookDemo {
 
 
     /**
+     * For convience used to point to localhost, port and the index called book
+     * Note this class does not test out that it can connect to Redis, it only sets up the objects to use.
+     * Disclaimer do not use this as the way in your code to do a singleton to get the client
+     * <p>
+     * The link to the client https://oss.redislabs.com/redisearch/java_client/
+     * <p>
+     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/client/Client.html
+     *
+     * @return client that is ready to make calls to Redis
+     */
+    public Client getClient() {
+        if (client == null) {
+            client = new io.redisearch.client.Client("art_book", "localhost", 6379);
+        }
+        return client;
+    }
+
+
+    /**
+     * No ideal way to check for a connection when index does not exist
+     * But this is another way which does the least amount of harm but still has problems.
+     * See post http://davidparry.com/blog/2018/12/2/testing-conductivity-in-jredissearch-to-redis-without-a-prev.html
+     *
+     * <p>
+     * http://davidparry.com/storage/jrediseach-javadoc-v0-19-0/docs/io/redisearch/client/Client.html#getInfo--
+     * <p>
+     * https://oss.redislabs.com/redisearch/Commands/#ftinfo
+     * <p>
+     * Command FT.INFO
+     *
+     * @return true if connection was successful
+     */
+    public boolean checkConnection() {
+        boolean flag = true;
+        try {
+            getClient().getInfo();
+        } catch (JedisConnectionException je) {
+            flag = false;
+        } catch (JedisDataException jex) {
+            // index not present or some other data exception :-(
+        }
+        return flag;
+    }
+
+
+    /**
      * We create our searchable index from the text from the line
      */
     public void createSearchableIndexBook() {
-        // clean up from other examples but leave it for the rest of the example
-        client.dropIndex(true);
-        client.createIndex(schema, io.redisearch.client.Client.IndexOptions.Default());
-        createDocuments().forEach(doc -> {
-            client.addDocument(doc, new AddOptions());
-        });
+        if (checkConnection()) {
+            // clean up from other examples but leave it for the rest of the example
+            getClient().dropIndex(true);
+            getClient().createIndex(schema, io.redisearch.client.Client.IndexOptions.Default());
+            createDocuments().forEach(doc -> {
+                getClient().addDocument(doc, new AddOptions());
+            });
+        } else {
+            throw new RuntimeException("Unable to load index of the art book :(");
+        }
     }
 
     /**
@@ -50,7 +102,7 @@ public class BookDemo {
      */
     public SearchResult search(String term) {
         Query query = new Query(term).setWithScores();
-        return client.search(query);
+        return getClient().search(query);
     }
 
     /**
@@ -62,7 +114,7 @@ public class BookDemo {
     public SearchResult searchFirstLines(String term, int lines) {
         Query query = new Query(term).setWithScores().limit(0, 100)
                 .addFilter(new Query.NumericFilter("line", 0, lines));
-        return client.search(query);
+        return getClient().search(query);
     }
 
     /**
@@ -70,12 +122,12 @@ public class BookDemo {
      */
     public void primeSuggestions() {
         createSuggestionSet().forEach(suggestion -> {
-            client.addSuggestion(suggestion, false);
+            getClient().addSuggestion(suggestion, false);
         });
     }
 
     public List<Suggestion> getSuggestions(String partial) {
-        List<Suggestion> suggestions = client.getSuggestion(partial, SuggestionOptions.builder().fuzzy().build());
+        List<Suggestion> suggestions = getClient().getSuggestion(partial, SuggestionOptions.builder().fuzzy().build());
         suggestions.stream().map(suggestion ->
                 suggestion.getString()
         ).collect(Collectors.toList());
@@ -115,6 +167,4 @@ public class BookDemo {
         });
         return terms;
     }
-
-
 }
